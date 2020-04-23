@@ -273,8 +273,8 @@ namespace cAlgo
                         _drawLevelFromCurrentBar(index);
 
                         break;
-
                     default:
+
 
                         _drawLevelFromDailyBar();
 
@@ -282,16 +282,15 @@ namespace cAlgo
 
                 }
 
-                
 
-            }
-            catch ( Exception exp )
+
+            } catch (Exception exp)
             {
 
                 Chart.DrawStaticText("Alert", string.Format("{0} : error, {1}", NAME, exp), VerticalAlignment.Center, HorizontalAlignment.Center, Color.Red);
 
             }
-            
+
 
         }
 
@@ -299,7 +298,7 @@ namespace cAlgo
 
         #region Private Methods
 
-        private void _drawLevelFromCurrentBar( int index )
+        private void _drawLevelFromCurrentBar(int index)
         {
 
             // --> Deve essere inizializzata
@@ -356,15 +355,16 @@ namespace cAlgo
             }
 
             // --> Se non ho abbastanza candele devo uscire
-            if (DailyBars.Count < 1)// --> BoxPeriod )
+            if (DailyBars.Count < 1)
+                // --> BoxPeriod )
                 return;
 
             // --> Indice Giornaliero
             int DailyIndex = DailyBars.Count - 1;
 
             // --> Ricavo l'inizio e la fine temporale del box, verrà preso in considerazione solo per timeframe inferiori
-            DateTime today = DailyBars[DailyIndex].OpenTime; // --> FirstCandleOfTheDay.OpenTime;
-
+            DateTime today = DailyBars[DailyIndex].OpenTime;
+            // --> FirstCandleOfTheDay.OpenTime;
             // --> Facendo attenzione al Venerdì ?
             DateTime tomorrow = today.AddDays(1);
 
@@ -382,22 +382,22 @@ namespace cAlgo
         /// <param name="index"></param>
         private void _drawLevelFromDailyBar()
         {
-            
+
             // --> Prelevo le candele daily
             Bars BarsDaily = MarketData.GetBars(TimeFrame.Daily);
 
-            int index = BarsDaily.Count -1;
+            int index = BarsDaily.Count - 1;
 
             // --> eseguo un ciclo aretroso per disegnare le ultime candele
-            for (int i = 0; i < DayShow ; i++)
+            for (int i = 0; i < DayShow; i++)
             {
 
                 // --> Il numero di candele da visualizzare potrebbero essere troppe
                 try
                 {
 
-                    DateTime today = BarsDaily[index - i].OpenTime; // --> FirstCandleOfTheDay.OpenTime;
-
+                    DateTime today = BarsDaily[index - i].OpenTime;
+                    // --> FirstCandleOfTheDay.OpenTime;
                     // --> Facendo attenzione al Venerdì ?
                     DateTime tomorrow = today.AddDays(1);
 
@@ -406,11 +406,10 @@ namespace cAlgo
                     Chart.DrawTrendLine("High" + rangeFlag, today, BarsDaily[index - i].High, tomorrow, BarsDaily[index - i].High, Color.FromName(ColorHigh), TicknessBox, LineStyleBox);
                     Chart.DrawTrendLine("Low" + rangeFlag, today, BarsDaily[index - i].Low, tomorrow, BarsDaily[index - i].Low, Color.FromName(ColorLow), TicknessBox, LineStyleBox);
 
-                }
-                catch 
+                } catch
                 {
 
-                    
+
                 }
 
             }
@@ -428,10 +427,10 @@ namespace cAlgo
                 return;
 
             // --> Organizzo i dati per la richiesta degli aggiornamenti
-            Guru.API.RequestProductInfo Request = new Guru.API.RequestProductInfo
+            Guru.API.RequestProductInfo Request = new Guru.API.RequestProductInfo 
             {
 
-                MyProduct = new Guru.Product
+                MyProduct = new Guru.Product 
                 {
 
                     ID = ID,
@@ -582,7 +581,7 @@ namespace Guru
             {
 
                 // --> Strutturo le informazioni per la richiesta POST
-                NameValueCollection data = new NameValueCollection
+                NameValueCollection data = new NameValueCollection 
                 {
                     {
                         "account_broker",
@@ -627,8 +626,7 @@ namespace Guru
                 // -->>> Nel cBot necessita l'attivazione di "AccessRights = AccessRights.FullAccess"
                 ProductInfo.LastProduct = JsonConvert.DeserializeObject<Product>(ProductInfo.Source);
 
-            }
-            catch (Exception Exp)
+            } catch (Exception Exp)
             {
 
                 // --> Qualcosa è andato storto, registro l'eccezione
